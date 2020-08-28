@@ -144,6 +144,8 @@
 	 */
 	Storage.prototype.setItem = function( name, value, options = { ttl: 60, path: "/", domain: "" })
 	{
+		const { ttl, path, domain } = options;
+
 		// ilk 2 argüman gerekli
 		if( arguments.length < 2 )
 
@@ -151,11 +153,11 @@
 
 		// ömür olarak infinity veya negatif
 		// değer verilirse ölümsüz yapacağız
-		if( options.ttl === Infinity || options.ttl < 0 )
+		if( ttl === Infinity || ttl < 0 )
 
-			options.ttl = INFINITY;
+			ttl = INFINITY;
 
-		document.cookie = `${name}=${value}; expires=${add2CurrentDate( options.ttl )}; path=${options.path}; domain=${options.domain}`;
+		document.cookie = `${name}=${value}; expires=${add2CurrentDate( ttl )}; path=${path}; domain=${domain}`;
 		this[ name ] = value;
 		keys.push( name );
 		this.length++
