@@ -217,6 +217,12 @@
 		return this.getItem( keys[ index ]);
 	}
 
+	// nesne, string türüne zorlandığında [object Storage] yapısı üretilsin
+	Object.defineProperty( Storage.prototype, Symbol.toStringTag,
+	{
+		value: "Storage"
+	});
+
 	// ilgili global nesne üzerine storage sınıfını kuralım
 	Object.setPrototypeOf(
 		global.cookieStorage,
