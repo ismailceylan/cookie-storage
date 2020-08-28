@@ -15,6 +15,7 @@
 	 *   ile benzer bir arayüz oluşturur.
 	 * 
 	 * @class Storage
+	 * @access private
 	 * @author İsmail Ceylan
 	 * @created 2020-08-28T15:25:12+0300
 	 */
@@ -38,6 +39,7 @@
 	 * 
 	 * @param {Number} seconds eklenecek saniye
 	 * @return {Date}
+	 * @access private
 	 * @author İsmail Ceylan
 	 * @created 2020-08-28T15:30:28+0300
 	 */
@@ -57,6 +59,7 @@
 	 * @param {String} cookie istenen bir cookie değişkeni
 	 * @param {String} cookies cookie katarı olarak ele alınması istenen bir string
 	 * @return {Object|String|undefined}
+	 * @access private
 	 * @author Ismail Ceylan
 	 * @created 2020-04-21T12:52:37+0300
 	 */
@@ -86,6 +89,7 @@
 	 * @param {String} itemDelimiter anahtar=değer çiftleri içinde kullanılan
 	 *   ayırıcı karakter (varsayılan "=")
 	 * @return {Object}
+	 * @access private
 	 * @author Ismail Ceylan
 	 * @created 2020-04-23T12:14:38+0300
 	 */
