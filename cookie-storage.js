@@ -217,6 +217,15 @@
 		return this.getItem( keys[ index ]);
 	}
 
+	// öğe sayısı
+	Object.defineProperty( Storage.prototype, "length",
+	{
+		get()
+		{
+			return this.length
+		}
+	});
+
 	// nesne, string türüne zorlandığında [object Storage] yapısı üretilsin
 	Object.defineProperty( Storage.prototype, Symbol.toStringTag,
 	{
