@@ -3,7 +3,7 @@
 	// 12000 yılın saniye cinsinden gösterimi
 	const INFINITY = 378691200000;
 	// sırayla çerez isimleri
-	const keys = [];
+	var keys = [];
 
 	global.cookieStorage =
 	{
@@ -21,13 +21,14 @@
 	 */
 	function Storage()
 	{
-		var all = cookies();
+		var all = cookies() || {};
+
+		keys = Object.keys( all );
 
 		// tarayıcıda zaten kayıtlı olan çerezleri unserialize edip
 		// bu arayüz üzerine getireceğiz böylece erişilebilir olacaklar
 		for( var cookie in all )
 		{
-			keys.push( cookie );
 			global.cookieStorage[ cookie ] = all[ cookie ];
 			global.cookieStorage.length++
 		}
@@ -156,6 +157,7 @@
 
 		document.cookie = `${name}=${value}; expires=${add2CurrentDate( options.ttl )}; path=${options.path}; domain=${options.domain}`;
 		this[ name ] = value;
+		keys.push( name );
 		this.length++
 	}
 
