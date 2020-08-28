@@ -220,6 +220,7 @@
 	// öğe sayısı
 	Object.defineProperty( Storage.prototype, "length",
 	{
+		enumerable: true,
 		get()
 		{
 			return this.length
