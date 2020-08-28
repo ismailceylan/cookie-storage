@@ -93,11 +93,8 @@
 	 * @author Ismail Ceylan
 	 * @created 2020-04-23T12:14:38+0300
 	 */
-	function unserializeKeyValue( source, delimiter, itemDelimiter )
+	function unserializeKeyValue( source, delimiter, itemDelimiter = "=" )
 	{
-		delimiter = delimiter || "<don't split anything>";
-		itemDelimiter = itemDelimiter || "=";
-
 		var r = {};
 
 		if( ! source )
