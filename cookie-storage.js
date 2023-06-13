@@ -3,7 +3,7 @@
 	// 12000 yılın saniye cinsinden gösterimi
 	const INFINITY = 378691200000;
 	// sırayla çerez isimleri
-	var keys = [];
+	const keys = [];
 
 	global.cookieStorage =
 	{
@@ -21,13 +21,15 @@
 	 */
 	function Storage()
 	{
-		var all = cookies() || {};
+		const all = cookies() || {};
 
-		keys = Object.keys( all );
+		keys.push( 
+			...Object.keys( all )
+		);
 
 		// tarayıcıda zaten kayıtlı olan çerezleri unserialize edip
 		// bu arayüz üzerine getireceğiz böylece erişilebilir olacaklar
-		for( var cookie in all )
+		for( const cookie in all )
 		{
 			global.cookieStorage[ cookie ] = all[ cookie ];
 			global.cookieStorage.length++
@@ -46,7 +48,7 @@
 	 */
 	function add2CurrentDate( seconds )
 	{
-		var current = new Date;
+		const current = new Date;
 		
 		current.setTime( current.getTime() + ( seconds * 1000 ));
 		return current;
@@ -64,15 +66,14 @@
 	 * @author Ismail Ceylan
 	 * @created 2020-04-21T12:52:37+0300
 	 */
-	function cookies( cookie, cookies )
+	function cookies( cookie, cookies = document.cookie )
 	{
-		cookies = cookies || document.cookie;
-	
 		if( ! cookies )
-	
+		{
 			return undefined;
-	
-		var r = unserializeKeyValue( cookies, "; " );
+		}
+		
+		const r = unserializeKeyValue( cookies, "; " );
 	
 		return cookie
 			? r[ cookie ]
@@ -96,35 +97,38 @@
 	 */
 	function unserializeKeyValue( source, delimiter, itemDelimiter = "=" )
 	{
-		var r = {};
+		const r = {};
 
 		if( ! source )
-
+		{
 			return r;
-
-		if( delimiter )
-
-			source = source.split( delimiter );
+		}
 		
+		if( delimiter )
+		{
+			source = source.split( delimiter );
+		}
 		else
-
+		{
 			source = [ source ];
-
+		}
+		
 		source.map( item =>
 		{
 			item = item.split( itemDelimiter );
 
 			if( item.length === 0 )
-
+			{
 				throw Error( "Syntax error: " + source );
-
+			}
 			else if( item.length === 1 )
-
+			{
 				r[ "" ] = item[ 0 ];
-			
+			}
 			else
-				
+			{	
 				r[ item[ 0 ]] = item[ 1 ];
+			}
 		});
 
 		return r;
@@ -148,15 +152,17 @@
 
 		// ilk 2 argüman gerekli
 		if( arguments.length < 2 )
-
+		{
 			throw new TypeError( `Failed to execute 'setItem' on 'Storage': 2 arguments required, but only ${arguments.length} present.` );
-
+		}
+		
 		// ömür olarak infinity veya negatif
 		// değer verilirse ölümsüz yapacağız
 		if( ttl === Infinity || ttl < 0 )
-
+		{
 			ttl = INFINITY;
-
+		}
+		
 		document.cookie = `${name}=${value}; expires=${add2CurrentDate( ttl )}; path=${path}; domain=${domain}`;
 		this[ name ] = value;
 		keys.push( name );
@@ -168,7 +174,7 @@
 	 * 
 	 * @param {String} name değeri istenen cookie adı
 	 * @param {mixed} deflt cookie mevcut değilse döndürülecek varsayılan değer
-	 * @return {String}
+	 * @return {any}
 	 * @author İsmail Ceylan
 	 * @created 2020-08-28T15:33:04+0300
 	 */
@@ -187,6 +193,7 @@
 	Storage.prototype.removeItem = function( name )
 	{
 		document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:01 GMT`;
+		
 		delete this[ name ];
 
 		this.length--
@@ -200,9 +207,10 @@
 	 */
 	Storage.prototype.clear = function()
 	{
-		for( var cookie in cookies())
-
+		for( const cookie in cookies())
+		{
 			this.removeItem( cookie );
+		}
 	}
 
 	/**
