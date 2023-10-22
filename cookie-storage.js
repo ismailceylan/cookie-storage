@@ -234,10 +234,7 @@
 	Object.defineProperty( Storage.prototype, "length",
 	{
 		enumerable: true,
-		get()
-		{
-			return this.length
-		}
+		get: () => this.length
 	});
 
 	// nesne, string türüne zorlandığında [object Storage] yapısı üretilsin
