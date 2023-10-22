@@ -30,70 +30,6 @@
 		}
 	}
 
-	function add2CurrentDate( seconds )
-	{
-		const current = new Date;
-		
-		current.setSeconds(
-			current.getSeconds() + seconds
-		);
-
-		return current;
-	}
-
-	function cookies( cookie, cookies = document.cookie )
-	{
-		if( ! cookies )
-		{
-			return undefined;
-		}
-		
-		const r = unserializeKeyValue( cookies, "; " );
-	
-		return cookie
-			? r[ cookie ]
-			: r;
-	}
-
-	function unserializeKeyValue( source, delimiter, itemDelimiter = "=" )
-	{
-		const r = {};
-
-		if( ! source )
-		{
-			return r;
-		}
-		
-		if( delimiter )
-		{
-			source = source.split( delimiter );
-		}
-		else
-		{
-			source = [ source ];
-		}
-		
-		source.map( item =>
-		{
-			item = item.split( itemDelimiter );
-
-			if( item.length === 0 )
-			{
-				throw Error( "Syntax error: " + source );
-			}
-			else if( item.length === 1 )
-			{
-				r[ "" ] = item[ 0 ];
-			}
-			else
-			{	
-				r[ item[ 0 ]] = item[ 1 ];
-			}
-		});
-
-		return r;
-	}
-
 	/**
 	 * Adds a new cookie to the browser.
 	 * 
@@ -199,5 +135,73 @@
 		global.cookieStorage,
 		( new Storage ).__proto__
 	);
+
+	// #################
+	// ### UTILITIES ###
+	// #################
+
+	function add2CurrentDate( seconds )
+	{
+		const current = new Date;
+		
+		current.setSeconds(
+			current.getSeconds() + seconds
+		);
+
+		return current;
+	}
+
+	function cookies( cookie, cookies = document.cookie )
+	{
+		if( ! cookies )
+		{
+			return undefined;
+		}
+		
+		const r = unserializeKeyValue( cookies, "; " );
+	
+		return cookie
+			? r[ cookie ]
+			: r;
+	}
+
+	function unserializeKeyValue( source, delimiter, itemDelimiter = "=" )
+	{
+		const r = {};
+
+		if( ! source )
+		{
+			return r;
+		}
+		
+		if( delimiter )
+		{
+			source = source.split( delimiter );
+		}
+		else
+		{
+			source = [ source ];
+		}
+		
+		source.map( item =>
+		{
+			item = item.split( itemDelimiter );
+
+			if( item.length === 0 )
+			{
+				throw Error( "Syntax error: " + source );
+			}
+			else if( item.length === 1 )
+			{
+				r[ "" ] = item[ 0 ];
+			}
+			else
+			{	
+				r[ item[ 0 ]] = item[ 1 ];
+			}
+		});
+
+		return r;
+	}
 })
 ( self );
