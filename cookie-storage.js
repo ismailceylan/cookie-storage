@@ -1,8 +1,8 @@
 ( function( global )
 {
-	// 12000 yılın saniye cinsinden gösterimi
+	// finite infinity
 	const INFINITY = 378691200000;
-	// sırayla çerez isimleri
+	// cookies bag
 	const keys = [];
 
 	global.cookieStorage =
@@ -11,8 +11,7 @@
 	}
 
 	/**
-	 * cookie saklama alanı için html5 API'leri olan localStorage ve sessionStorage
-	 *   ile benzer bir arayüz oluşturur.
+	 * The main storage object that will be accessible globally.
 	 */
 	function Storage()
 	{
@@ -22,8 +21,8 @@
 			...Object.keys( all )
 		);
 
-		// tarayıcıda zaten kayıtlı olan çerezleri unserialize edip
-		// bu arayüz üzerine getireceğiz böylece erişilebilir olacaklar
+		// we will unserialize the cookies already saved in the browser
+		// and bring them to this interface so they will be accessible
 		for( const cookie in all )
 		{
 			global.cookieStorage[ cookie ] = all[ cookie ];
@@ -96,25 +95,25 @@
 	}
 
 	/**
-	 * Tarayıcıya yeni bir cookie ekler.
+	 * Adds a new cookie to the browser.
 	 * 
-	 * @param {String} name eklenecek cookie adı
-	 * @param {String} value cookie değeri
-	 * @param {Object} options cookie ayarları
-	 * @property {Number} options.ttl cookie'nin ömrü
-	 * @property {String} options.path cookie'nin geçerli olacağı alt dizin
-	 * @property {String} options.domain cookie'nin geçerli olacağı alan adı
+	 * @param {String} name cookie name
+	 * @param {String} value cookie value
+	 * @param {Object} options cookie options
+	 * @property {Number} options.ttl cookie life
+	 * @property {String} options.path cookie path
+	 * @property {String} options.domain cookie domain
 	 */
 	Storage.prototype.setItem = function( name, value, { ttl: 60, path: "/", domain: "" } = {})
 	{
-		// ilk 2 argüman gerekli
+		// we will make sure the first two arguments are present
 		if( arguments.length < 2 )
 		{
 			throw new TypeError( `Failed to execute 'setItem' on 'Storage': 2 arguments required, but only ${arguments.length} present.` );
 		}
 		
-		// ömür olarak infinity veya negatif
-		// değer verilirse ölümsüz yapacağız
+		// If infinity or negative value is given as lifetime
+		// we will ensure that the cookie is immortal
 		if( ttl === Infinity || ttl < 0 )
 		{
 			ttl = INFINITY;
@@ -127,10 +126,10 @@
 	}
 
 	/**
-	 * Adı verilen cookie değerini döndürür.
+	 * Returns a cookie's value.
 	 * 
-	 * @param {String} name değeri istenen cookie adı
-	 * @param {mixed} deflt cookie mevcut değilse döndürülecek varsayılan değer
+	 * @param {String} name cookie name
+	 * @param {mixed} deflt default value when cookie not exists
 	 * @return {any}
 	 */
 	Storage.prototype.getItem = function( name, deflt )
@@ -139,9 +138,9 @@
 	}
 
 	/**
-	 * Adı verilen cookie'yi sistemden siler.
+	 * Removes a cookie.
 	 * 
-	 * @param {String} name silinecek cookie adı
+	 * @param {String} name cookie name
 	 */
 	Storage.prototype.removeItem = function( name )
 	{
@@ -153,7 +152,7 @@
 	}
 
 	/**
-	 * Tarayıcıdaki bütün cookie'leri siler.
+	 * Wipes out all the cookies.
 	 */
 	Storage.prototype.clear = function()
 	{
@@ -164,10 +163,10 @@
 	}
 
 	/**
-	 * Oluşturma önceliğine bağlı olarak sıra numarası verilen bir
-	 *   çerezin değerini döndürür.
+	 * Returns cookie value at given index. indexes represent the
+  	 * creation order of cookies.
 	 * 
-	 * @param {Number} index istenen cookie'nin oluşturulduğu sıra numarası
+	 * @param {Number} index cookie index
 	 * @return {String}
 	 */
 	Storage.prototype.key = function( index )
@@ -175,20 +174,27 @@
 		return this.getItem( keys[ index ]);
 	}
 
-	// öğe sayısı
+	/**
+	 * Cookies count.
+	 * 
+	 * @var {Number} length
+	 */
 	Object.defineProperty( Storage.prototype, "length",
 	{
 		enumerable: true,
 		get: () => this.length
 	});
 
-	// nesne, string türüne zorlandığında [object Storage] yapısı üretilsin
+	/**
+	 * String tag of Storage class.
+	 * 
+	 * @var {String} Symbol.toStringTag
+	 */
 	Object.defineProperty( Storage.prototype, Symbol.toStringTag,
 	{
 		value: "Storage"
 	});
 
-	// ilgili global nesne üzerine storage sınıfını kuralım
 	Object.setPrototypeOf(
 		global.cookieStorage,
 		( new Storage ).__proto__
