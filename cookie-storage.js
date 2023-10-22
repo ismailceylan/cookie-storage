@@ -13,11 +13,6 @@
 	/**
 	 * cookie saklama alanı için html5 API'leri olan localStorage ve sessionStorage
 	 *   ile benzer bir arayüz oluşturur.
-	 * 
-	 * @class Storage
-	 * @access private
-	 * @author İsmail Ceylan
-	 * @created 2020-08-28T15:25:12+0300
 	 */
 	function Storage()
 	{
@@ -36,16 +31,6 @@
 		}
 	}
 
-	/**
-	 * Güncel zamana verilen saniye kadar bir süre ekleyip tarih nesnesi olarak
-	 *   döndürür.
-	 * 
-	 * @param {Number} seconds eklenecek saniye
-	 * @return {Date}
-	 * @access private
-	 * @author İsmail Ceylan
-	 * @created 2020-08-28T15:30:28+0300
-	 */
 	function add2CurrentDate( seconds )
 	{
 		const current = new Date;
@@ -57,18 +42,6 @@
 		return current;
 	}
 
-	/**
-	 * Parametre olarak verilen veya kullanıcıda kayıtlı çerezleri okur, parçalar ve
-	 *   nesne haline getirip döndürür.
-	 *
-	 * @method get
-	 * @param {String} cookie istenen bir cookie değişkeni
-	 * @param {String} cookies cookie katarı olarak ele alınması istenen bir string
-	 * @return {Object|String|undefined}
-	 * @access private
-	 * @author Ismail Ceylan
-	 * @created 2020-04-21T12:52:37+0300
-	 */
 	function cookies( cookie, cookies = document.cookie )
 	{
 		if( ! cookies )
@@ -83,21 +56,6 @@
 			: r;
 	}
 
-	/**
-	 * key=value{{DELIMITER}}key=value... yapısına uygun string katarı haline
-	 *   getirilmiş anahtar ve değer çiftlerini parçalayıp native nesne olarak
-	 *   döndürür.
-	 *
-	 * @method unserializeKeyValue
-	 * @param {String} source anahtar değer çiftlerinin string hali
-	 * @param {String} delimiter anahtar=değer gruplarını birbirinden ayıran karakter
-	 * @param {String} itemDelimiter anahtar=değer çiftleri içinde kullanılan
-	 *   ayırıcı karakter (varsayılan "=")
-	 * @return {Object}
-	 * @access private
-	 * @author Ismail Ceylan
-	 * @created 2020-04-23T12:14:38+0300
-	 */
 	function unserializeKeyValue( source, delimiter, itemDelimiter = "=" )
 	{
 		const r = {};
@@ -146,8 +104,6 @@
 	 * @property {Number} options.ttl cookie'nin ömrü
 	 * @property {String} options.path cookie'nin geçerli olacağı alt dizin
 	 * @property {String} options.domain cookie'nin geçerli olacağı alan adı
-	 * @author İsmail Ceylan
-	 * @created 2020-08-28T15:32:56+0300
 	 */
 	Storage.prototype.setItem = function( name, value, options = { ttl: 60, path: "/", domain: "" })
 	{
@@ -178,8 +134,6 @@
 	 * @param {String} name değeri istenen cookie adı
 	 * @param {mixed} deflt cookie mevcut değilse döndürülecek varsayılan değer
 	 * @return {any}
-	 * @author İsmail Ceylan
-	 * @created 2020-08-28T15:33:04+0300
 	 */
 	Storage.prototype.getItem = function( name, deflt )
 	{
@@ -190,8 +144,6 @@
 	 * Adı verilen cookie'yi sistemden siler.
 	 * 
 	 * @param {String} name silinecek cookie adı
-	 * @author İsmail Ceylan
-	 * @created 2020-08-28T15:38:10+0300
 	 */
 	Storage.prototype.removeItem = function( name )
 	{
@@ -204,9 +156,6 @@
 
 	/**
 	 * Tarayıcıdaki bütün cookie'leri siler.
-	 * 
-	 * @author İsmail Ceylan
-	 * @created 2020-08-28T15:39:57+0300
 	 */
 	Storage.prototype.clear = function()
 	{
@@ -222,8 +171,6 @@
 	 * 
 	 * @param {Number} index istenen cookie'nin oluşturulduğu sıra numarası
 	 * @return {String}
-	 * @author İsmail Ceylan
-	 * @created 2020-08-28T18:02:47+0300
 	 */
 	Storage.prototype.key = function( index )
 	{
