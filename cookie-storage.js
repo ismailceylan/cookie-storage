@@ -50,7 +50,10 @@
 	{
 		const current = new Date;
 		
-		current.setTime( current.getTime() + ( seconds * 1000 ));
+		current.setSeconds(
+			current.getSeconds() + seconds
+		);
+
 		return current;
 	}
 
