@@ -105,10 +105,8 @@
 	 * @property {String} options.path cookie'nin geçerli olacağı alt dizin
 	 * @property {String} options.domain cookie'nin geçerli olacağı alan adı
 	 */
-	Storage.prototype.setItem = function( name, value, options = { ttl: 60, path: "/", domain: "" })
+	Storage.prototype.setItem = function( name, value, { ttl: 60, path: "/", domain: "" } = {})
 	{
-		const { ttl, path, domain } = options;
-
 		// ilk 2 argüman gerekli
 		if( arguments.length < 2 )
 		{
