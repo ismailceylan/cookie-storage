@@ -40,7 +40,7 @@
 	 * @property {String} options.path cookie path
 	 * @property {String} options.domain cookie domain
 	 */
-	Storage.prototype.setItem = function( name, value, { ttl: 60, path: "/", domain: "" } = {})
+	Storage.prototype.setItem = function( name, value, { ttl = 60, path = "/", domain = "" } = {})
 	{
 		// we will make sure the first two arguments are present
 		if( arguments.length < 2 )
@@ -80,6 +80,11 @@
 	 */
 	Storage.prototype.removeItem = function( name )
 	{
+		if( ! ( name in this ))
+		{
+			return;
+		}
+		
 		document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:01 GMT`;
 		
 		delete this[ name ];
